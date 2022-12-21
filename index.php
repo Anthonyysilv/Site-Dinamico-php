@@ -1,8 +1,10 @@
 <?php
-    
-    $paginas = ['home'=>'Minha página home aqui!', 'sobre'=>'Estou na página sobre', 'contato'=>'<form><input type="text" placeholder="Seu nome..." /></form>',
-        'FAQ'=>'Perguntas frequentes', 'Loja'=>'conteúdo loja'];
-    
+    session_start();
+
+    $identity = null;
+    if(isset($_SESSION['identity'])){
+        $identity = $_SESSION['identity'];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -10,58 +12,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site PHP</title>
-    <style type="text/css">
-        *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        header{
-            background-color: #069;
-            padding: 8px 10px;
-            text-align: center;
-        }
-        a{
-            display: inline-block;
-            margin: 0 10px;
-            color: white;
-            font-size: 17px;
-        }
-        section{
-            max-width: 960px;
-            margin: 20px auto;
-            padding: 0 2%;
-        }
-        h2{
-            background-color: #069;
-            color: white;
-            padding: 8px 10px;
-        }
-        p{
-            color: black;
-            margin-top: 10px;
-            font-size: 16px;
-        }
-    </style>
+    <title>Home page</title>
 </head>
 <body>
-    <header>
-        <?php
-            foreach ($paginas as $key => $value) {
-                echo '<a href="?page='.$Key.'">'.ucfirst($Key).'</a>';
-            }
-        ?>
-    </header>
-    <section>
-        <h2><?php
-            $pagina = (isset($_GET['page']) ? $_GET['page'] : 'home');
-            if (!array_key_exists($pagina, $paginas)) {
-                $pagina = 'home';
-            }
-            echo ucfirst($pagina);
-        ?></h2>
-        <p><?php echo $paginas[$pagina]; ?></p>
-    </section>
+    <h1>Home</h1>
+    <?php if($identity==null): ?>
+        <a href="login.php">Entrar</a>
+    <?php else: ?>
+        <strong>Bem-vindo!, <?=$identity?></strong><a href="logout.php">Sair</a>
+    <?php endif; ?>
+
+    <p>Este é um site simples para demonstrar as vantagens de um framework PHP
+            e desvantagens do PHP "puro".</p>
 </body>
 </html>
